@@ -1,0 +1,2 @@
+CREATE DATABASE IF NOT EXISTS eco;
+use eco;
