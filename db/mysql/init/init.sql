@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS characters
     is_possible       BIT(1)                        NOT NULL,
     max_level         INT                           NOT NULL,
     complete_messages LONGTEXT                      NOT NULL,
-    created_at        DATETIME(6) DEFAULT NULL,
-    updated_at        DATETIME(6) DEFAULT NULL,
+    created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at        TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (character_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -62,8 +62,8 @@ CREATE TABLE IF NOT EXISTS items
     is_use      BIT(1)      DEFAULT NULL,
     level_up    INT          NOT NULL,
     description LONGTEXT    DEFAULT NULL,
-    created_at  DATETIME(6) DEFAULT NULL,
-    updated_at  DATETIME(6) DEFAULT NULL,
+    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (item_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -79,8 +79,8 @@ CREATE TABLE IF NOT EXISTS question
     body          LONGTEXT                              NOT NULL,
     answer        VARCHAR(255)                          NOT NULL,
     question_type ENUM ('MULTIPLE_CHOICE','SUBJECTIVE') NOT NULL,
-    created_at    DATETIME(6) DEFAULT NULL,
-    updated_at    DATETIME(6) DEFAULT NULL,
+    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at    TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (question_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -93,8 +93,8 @@ CREATE TABLE IF NOT EXISTS video
     video_id   BIGINT       NOT NULL AUTO_INCREMENT,
     name       VARCHAR(255) NOT NULL,
     url        LONGTEXT     NOT NULL,
-    created_at DATETIME(6) DEFAULT NULL,
-    updated_at DATETIME(6) DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (video_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS user_point
     user_point_id BIGINT NOT NULL AUTO_INCREMENT,
     user_id       BIGINT      DEFAULT NULL,
     user_point    INT    NOT NULL,
-    updated_at    DATETIME(6) DEFAULT NULL,
+    updated_at    TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (user_point_id),
     KEY idx_user_point_user (user_id),
     CONSTRAINT fk_user_point_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS trash_user
 (
     trash_user_id BIGINT NOT NULL AUTO_INCREMENT,
     user_id       BIGINT      DEFAULT NULL,
-    updated_at    DATETIME(6) DEFAULT NULL,
+    cleaned_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (trash_user_id),
     UNIQUE KEY uk_trash_user_user (user_id),
     CONSTRAINT fk_trash_user_user FOREIGN KEY (user_id) REFERENCES users (id)
@@ -193,8 +193,8 @@ CREATE TABLE IF NOT EXISTS user_item
     user_id      BIGINT      DEFAULT NULL,
     item_id      BIGINT      DEFAULT NULL,
     is_use       BIT(1) NOT NULL,
-    created_at   DATETIME(6) DEFAULT NULL,
-    updated_at   DATETIME(6) DEFAULT NULL,
+    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at   TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (user_item_id),
     KEY idx_user_item_item (item_id),
     KEY idx_user_item_user (user_id),
